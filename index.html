@@ -209,6 +209,7 @@
       document.getElementById('summary-client').textContent = t.clientBenefitsTitle;
       document.getElementById('summary-sp').textContent = t.spBenefitsTitle;
 
+      // Update benefits list dynamically
       const clientList = document.querySelectorAll('#benefits-list li');
       t.benefitsClient.forEach((text, i) => {
         if (clientList[i]) clientList[i].textContent = text;
@@ -220,11 +221,65 @@
       });
     }
 
+    // Loan Calculation Function
+    function calculateLoan() {
+      const amount = parseFloat(document.getElementById('amount').value) || 0;
+      const down = parseFloat(document.getElementById('downPayment').value) || 0;
+      const province = document.getElementById('province').value;
+      const total = amount - down;
+
+      const taxRates = {
+        QC: 0.14975,
+        ON: 0.13,
+        BC: 0.12,
+        AB: 0.05,
+        MB: 0.12,
+        SK: 0.11,
+        NS: 0.15,
+        NB: 0.15,
+        NL: 0.15,
+        PE: 0.15,
+        NT: 0.05,
+        NU: 0.05,
+        YT: 0.05
+      };
+
+      const tax = total * (taxRates[province] || 0.13);
+      const totalWithTax = total + tax;
+
+      const rateAdjustments = {
+        Excellent: 0.0999,
+        "Very Good": 0.1299,
+        Good: 0.1499,
+        Fair: 0.1699,
+        Poor: 0.1999
+      };
+
+      const adjustment = rateAdjustments[document.getElementById('creditScore').value] || 0.1499;
+      const monthly = (totalWithTax * (adjustment / 12)) / (1 - Math.pow(1 + (adjustment / 12), -60)); // 60 months
+
+      // Display results
+      document.getElementById('totalTax').textContent = tax.toFixed(2);
+      document.getElementById('totalAmount').textContent = totalWithTax.toFixed(2);
+
+      // Update payment table
+      updatePaymentTable(monthly);
+    }
+
+    function updatePaymentTable(monthly) {
+      const table = document.getElementById('termComparisonTable');
+      table.innerHTML = '';
+      const terms = [12, 24, 36, 48, 60, 72, 84];
+      terms.forEach(term => {
+        const monthlyPayment = monthly * term;
+        const row = `<tr><td class="p-2">${term}</td><td class="p-2">${monthlyPayment.toFixed(2)}</td></tr>`;
+        table.innerHTML += row;
+      });
+    }
+
     // Set default language based on browser
     const userLang = navigator.language.startsWith('fr') ? 'fr' : 'en';
     updateLanguage(userLang);
   </script>
 </body>
 </html>
-
-
