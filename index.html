@@ -172,10 +172,10 @@
           clientBenefitsTitle: 'Pourquoi proposer iFinance à vos clients ?',
           spBenefitsTitle: 'Pourquoi utiliser iFinance comme fournisseur de services ?',
           benefitsClient: [
-            'Conditions de paiement flexibles jusqu\'à 84 mois',
+            'Modalités de paiement flexibles jusqu\'à 84 mois',
             'En affaires depuis 1996',
             'Préqualification initiale sans impact sur le crédit',
-            'Préalable en 2 minutes',
+            'Préapprobation en 2 minutes',
             'Taux d\'approbation élevés pour tous les niveaux de crédit',
             'Aucuns frais initiaux ou frais cachés',
             'Processus de demande simple et rapide',
@@ -192,7 +192,6 @@
         }
       };
 
-      // Apply the translations dynamically
       const t = translations[lang];
       document.getElementById('title').textContent = t.title;
       document.getElementById('label-amount').textContent = t.labelAmount;
@@ -210,7 +209,6 @@
       document.getElementById('summary-client').textContent = t.clientBenefitsTitle;
       document.getElementById('summary-sp').textContent = t.spBenefitsTitle;
 
-      // Update the benefits list dynamically
       const clientList = document.querySelectorAll('#benefits-list li');
       t.benefitsClient.forEach((text, i) => {
         if (clientList[i]) clientList[i].textContent = text;
@@ -228,4 +226,5 @@
   </script>
 </body>
 </html>
+
 
