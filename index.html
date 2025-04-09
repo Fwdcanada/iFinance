@@ -18,6 +18,12 @@
         </select>
       </div>
 
+      <!-- Service Provider Link Input Section (Moved to the top) -->
+      <label id="label-link" for="sp-link" class="block font-semibold mt-4">Service Provider Link</label>
+      <input id="sp-link" type="url" class="border p-2 w-full mb-4 rounded-xl" placeholder="Enter your finance link here" />
+      <button id="save-link-btn" class="bg-green-500 text-white p-3 w-full rounded-xl" onclick="saveProviderLink()">Save Link</button>
+      <p id="saved-link-msg" class="text-green-600 mt-2"></p>
+
       <!-- Loan Amount Field -->
       <label id="label-amount" for="amount" class="block font-semibold mb-1">Total Purchase Amount ($)</label>
       <input id="amount" type="number" class="border p-2 w-full mb-4 rounded-xl" />
@@ -82,12 +88,6 @@
       <label id="label-email" for="email" class="block font-semibold mb-1">Client Email</label>
       <input id="email" type="email" class="border p-2 w-full mb-4 rounded-xl" />
       <button id="send-btn" class="bg-green-500 text-white p-3 w-full rounded-xl" onclick="sendApplication()">Send Application</button>
-
-      <!-- Service Provider Link Input Section -->
-      <label id="label-link" for="sp-link" class="block font-semibold mt-4">Service Provider Link</label>
-      <input id="sp-link" type="url" class="border p-2 w-full mb-4 rounded-xl" placeholder="Enter your finance link here" />
-      <button id="save-link-btn" class="bg-green-500 text-white p-3 w-full rounded-xl" onclick="saveProviderLink()">Save Link</button>
-      <p id="saved-link-msg" class="text-green-600 mt-2"></p>
     </section>
 
     <!-- Service Provider Portal Sidebar -->
@@ -283,3 +283,4 @@
   </script>
 </body>
 </html>
+
