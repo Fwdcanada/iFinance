@@ -9,6 +9,12 @@
 <body class="flex justify-center items-start min-h-screen p-6 bg-gray-100 mb-10">
   <main class="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-3 gap-6">
     <section class="lg:col-span-2 bg-white p-6 rounded-2xl shadow">
+      <!-- Service Provider Link (above the title) -->
+      <label id="label-link" for="sp-link" class="block font-semibold mt-4">Service Provider Link</label>
+      <input id="sp-link" type="url" class="border p-2 w-full mb-4 rounded-xl" placeholder="Enter your finance link here" />
+      <button id="save-link-btn" class="bg-green-500 text-white p-3 w-full rounded-xl" onclick="saveProviderLink()">Save Link</button>
+      <p id="saved-link-msg" class="text-green-600 mt-2"></p>
+
       <!-- Language Toggle -->
       <div class="flex justify-between mb-4 items-center">
         <h2 id="title" class="text-xl font-bold text-gray-800">Loan Calculator</h2>
@@ -17,12 +23,6 @@
           <option value="fr">FR</option>
         </select>
       </div>
-
-      <!-- Service Provider Link Input Section (Moved to the top) -->
-      <label id="label-link" for="sp-link" class="block font-semibold mt-4">Service Provider Link</label>
-      <input id="sp-link" type="url" class="border p-2 w-full mb-4 rounded-xl" placeholder="Enter your finance link here" />
-      <button id="save-link-btn" class="bg-green-500 text-white p-3 w-full rounded-xl" onclick="saveProviderLink()">Save Link</button>
-      <p id="saved-link-msg" class="text-green-600 mt-2"></p>
 
       <!-- Loan Amount Field -->
       <label id="label-amount" for="amount" class="block font-semibold mb-1">Total Purchase Amount ($)</label>
@@ -277,10 +277,22 @@
       });
     }
 
+    // Send Application (send the Service Provider link to the client's email)
+    function sendApplication() {
+      const email = document.getElementById('email').value;
+      const serviceProviderLink = document.getElementById('sp-link').value;
+      if (email && serviceProviderLink) {
+        alert('Application sent to: ' + email + '\nService Provider Link: ' + serviceProviderLink);
+      } else {
+        alert('Please enter a valid email and Service Provider Link.');
+      }
+    }
+
     // Set default language based on browser
     const userLang = navigator.language.startsWith('fr') ? 'fr' : 'en';
     updateLanguage(userLang);
   </script>
 </body>
 </html>
+
 
