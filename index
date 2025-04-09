@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Loan Calculator</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+</head>
+<body class="flex justify-center items-start min-h-screen p-6 bg-gray-100 mb-10">
+  <main class="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <section class="lg:col-span-2 bg-white p-6 rounded-2xl shadow">
+      <div class="flex justify-between mb-4 items-center">
+        <h2 id="title" class="text-xl font-bold text-gray-800">Loan Calculator</h2>
+        <select onchange="updateLanguage(this.value)" class="border p-2 rounded">
+          <option value="en">EN</option>
+          <option value="fr">FR</option>
+        </select>
+      </div>
+
+      <label id="label-amount" for="amount" class="block font-semibold mb-1">Total Purchase Amount ($)</label>
+      <input id="amount" type="number" class="border p-2 w-full mb-4 rounded-xl" />
+
+      <label id="label-downPayment" for="downPayment" class="block font-semibold mb-1">Down Payment ($)</label>
+      <input id="downPayment" type="number" class="border p-2 w-full mb-4 rounded-xl" />
+
+      <label id="label-province" for="province" class="block font-semibold mb-1">Province</label>
+      <select id="province" class="border p-2 w-full mb-4 rounded-xl">
+        <option value="QC">Quebec</option>
+        <option value="ON">Ontario</option>
+        <option value="BC">British Columbia</option>
+        <option value="AB">Alberta</option>
+        <option value="MB">Manitoba</option>
+        <option value="SK">Saskatchewan</option>
+        <option value="NS">Nova Scotia</option>
+        <option value="NB">New Brunswick</option>
+        <option value="NL">Newfoundland and Labrador</option>
+        <option value="PE">Prince Edward Island</option>
+        <option value="NT">Northwest Territories</option>
+        <option value="NU">Nunavut</option>
+        <option value="YT">Yukon</option>
+      </select>
+
+      <label id="label-creditScore" for="creditScore" class="block font-semibold mb-1">Credit Score</label>
+      <select id="creditScore" class="border p-2 w-full mb-4 rounded-xl">
+        <option value="Excellent">Excellent</option>
+        <option value="Very Good">Very Good</option>
+        <option value="Good">Good</option>
+        <option value="Fair">Fair</option>
+        <option value="Poor">Poor</option>
+      </select>
+
+      <button id="calculate-btn" class="bg-blue-600 text-white p-3 w-full rounded-xl mb-4" onclick="calculateLoan()">Calculate</button>
+
+      <div class="bg-gray-100 p-3 rounded-xl mb-4 text-center">
+        <p><strong id="label-totalTax">Total Taxes:</strong> $<span id="totalTax">0.00</span></p>
+        <p><strong id="label-totalAmount">Total Amount:</strong> $<span id="totalAmount">0.00</span></p>
+      </div>
+
+      <h3 id="term-compare-heading" class="text-lg font-semibold mb-2">Monthly Payment Comparison by Term</h3>
+      <p id="termNote" class="text-red-600 text-sm mb-2"></p>
+      <div class="overflow-x-auto mb-6">
+        <table class="w-full text-sm text-left">
+          <thead class="bg-gray-200">
+            <tr>
+              <th id="term-header" class="p-2">Term (months)</th>
+              <th id="payment-header" class="p-2">Monthly Payment ($)</th>
+            </tr>
+          </thead>
+          <tbody id="termComparisonTable" class="divide-y"></tbody>
+        </table>
+      </div>
+
+      <label id="label-email" for="email" class="block font-semibold mb-1">Client Email</label>
+      <input id="email" type="email" class="border p-2 w-full mb-4 rounded-xl" />
+      <button id="send-btn" class="bg-green-500 text-white p-3 w-full rounded-xl" onclick="sendApplication()">Send Application</button>
+    </section>
+
+    <aside class="bg-white p-6 rounded-2xl shadow w-full">
+      <div class="mb-6">
+        <h3 class="text-xl font-bold text-blue-800 mb-4">Service Provider Portal</h3>
+        <p class="text-gray-700 mb-4">Log in to manage your account, view applications, and more.</p>
+        <a href="https://icebergfinance2sp.b2clogin.com/..." target="_blank" class="block bg-blue-700 text-white text-center p-3 rounded-xl font-semibold hover:bg-blue-800 transition">Access iFinance Portal</a>
+      </div>
+
+      <details class="mb-4">
+        <summary id="summary-client" class="text-xl font-bold text-blue-800 cursor-pointer">Why Offer iFinance to Your Clients?</summary>
+        <ul id="benefits-list" class="list-disc list-inside text-gray-700 space-y-2 mt-2">
+          <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+        </ul>
+      </details>
+
+      <details class="mb-4">
+        <summary id="summary-sp" class="text-xl font-bold text-blue-800 cursor-pointer">Why Use iFinance as a Service Provider?</summary>
+        <ul id="benefits-list-sp" class="list-disc list-inside text-gray-700 space-y-2 mt-2">
+          <li></li><li></li><li></li><li></li><li></li>
+        </ul>
+      </details>
+    </aside>
+  </main>
+
+  <script>
+    // Language translation function
+    function updateLanguage(lang) {
+      const isFr = lang === 'fr';
+      const translations = {
+        en: {
+          benefitsClientTitle: 'Why Offer iFinance to Your Clients?',
+          benefitsSPTitle: 'Why Use iFinance as a Service Provider?',
+          benefitsClient: [
+            'Flexible payment terms up to 84 months',
+            'In business since 1996',
+            'Initial pre-qualification has no impact on credit',
+            'Get pre-approved in 2 minutes',
+            'High approval rates across all credit tiers',
+            'No upfront fees or hidden charges',
+            'Quick and easy online application process',
+            'Trusted by thousands of Canadian businesses',
+            'Better rates than most credit cards'
+          ],
+          benefitsSP: [
+            'Get paid upfront — no waiting on customers',
+            'No transaction fees like credit card payments',
+            'Offer financing to boost customer conversion rates',
+            'Stand out from competitors with flexible payment options',
+            'Secure larger deals by reducing price objections'
+          ]
+        },
+        fr: {
+          benefitsClientTitle: 'Pourquoi proposer iFinance à vos clients ?',
+          benefitsSPTitle: 'Pourquoi utiliser iFinance comme fournisseur de services ?',
+          benefitsClient: [
+            'Modalités de paiement flexibles jusqu’à 84 mois',
+            'En affaires depuis 1996',
+            'Préqualification initiale sans impact sur le crédit',
+            'Préapprobation en 2 minutes',
+            'Taux d’approbation élevés pour tous les niveaux de crédit',
+            'Aucuns frais initiaux ou frais cachés',
+            'Processus de demande simple et rapide',
+            'Fiabilité reconnue par des milliers d’entreprises canadiennes',
+            'Meilleurs taux que la plupart des cartes de crédit'
+          ],
+          benefitsSP: [
+            'Recevez un paiement immédiat — plus besoin d’attendre les clients',
+            'Aucun frais de transaction comme les cartes de crédit',
+            'Proposez du financement pour augmenter votre taux de conversion',
+            'Démarquez-vous grâce à des options de paiement flexibles',
+            'Concluez des ventes plus importantes en réduisant les objections liées au prix'
+          ]
+        }
+      };
+
+      const t = translations[lang];
+      document.getElementById('summary-client').textContent = t.benefitsClientTitle;
+      document.getElementById('summary-sp').textContent = t.benefitsSPTitle;
+
+      const clientList = document.querySelectorAll('#benefits-list li');
+      t.benefitsClient.forEach((text, i) => {
+        if (clientList[i]) clientList[i].textContent = text;
+      });
+
+      const spList = document.querySelectorAll('#benefits-list-sp li');
+      t.benefitsSP.forEach((text, i) => {
+        if (spList[i]) spList[i].textContent = text;
+      });
+    }
+
+    // Loan calculation function
+    function calculateLoan() {
+      const amount = parseFloat(document.getElementById('amount').value) || 0;
+      const down = parseFloat(document.getElementById('downPayment').value) || 0;
+      const province = document.getElementById('province').value;
+      const total = amount - down;
+
+      const taxRates = {
+        QC: 0.14975,
+        ON: 0.13,
+        BC: 0.12,
+        AB: 0.05,
+        MB: 0.12,
+        SK: 0.11,
+        NS: 0.15,
+        NB: 0.15,
+        NL: 0.15,
+        PE: 0.15,
+        NT: 0.05,
+        NU: 0.05,
+        YT: 0.05
+      };
+
+      const tax = total * (taxRates[province] || 0.13);
+      const totalWithTax = total + tax;
+
+      const rateAdjustments = {
+        Excellent: 0.0999,
+        "Very Good": 0.1299,
+        Good: 0.1499,
+        Fair: 0.1699,
+        Poor: 0.1999
+      };
+
+      const adjustment = rateAdjustments[document.getElementById('creditScore').value] || 0.1499;
+      const monthly = (totalWithTax * (adjustment / 12)) / (1 - Math.pow(1 + (adjustment / 12), -60)); // 60 months
+
+      // Display results
+      document.getElementById('totalTax').textContent = tax.toFixed(2);
+      document.getElementById('totalAmount').textContent = totalWithTax.toFixed(2);
+
+      // Update payment table
+      updatePaymentTable(monthly);
+    }
+
+    function updatePaymentTable(monthly) {
+      const table = document.getElementById('termComparisonTable');
+      table.innerHTML = '';
+      const terms = [12, 24, 36, 48, 60, 72, 84];
+      terms.forEach(term => {
+        const monthlyPayment = monthly * term;
+        const row = `<tr><td class="p-2">${term}</td><td class="p-2">${monthlyPayment.toFixed(2)}</td></tr>`;
+        table.innerHTML += row;
+      });
+    }
+
+    function sendApplication() {
+      const email = document.getElementById('email').value;
+      alert('Application sent to: ' + email);
+    }
+
+    // Set default language based on browser
+    const userLang = navigator.language.startsWith('fr') ? 'fr' : 'en';
+    updateLanguage(userLang);
+  </script>
+</body>
+</html>
