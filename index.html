@@ -11,25 +11,16 @@
 <body class="flex justify-center items-start min-h-screen p-6 bg-gray-100 mb-10">
   <main class="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-3 gap-6">
     <section class="lg:col-span-2 bg-white p-6 rounded-2xl shadow">
-      <!-- Language Toggle -->
-      <div class="flex justify-between mb-4 items-center">
-        <h2 id="title" class="text-xl font-bold text-gray-800">Loan Calculator</h2>
-        <select onchange="updateLanguage(this.value)" class="border p-2 rounded">
-          <option value="en">EN</option>
-          <option value="fr">FR</option>
-        </select>
-      </div>
-
       <!-- Loan Amount Field -->
-      <label id="label-amount" for="amount" class="block font-semibold mb-1">Total Purchase Amount ($)</label>
+      <label for="amount">Total Purchase Amount ($)</label>
       <input id="amount" type="number" class="border p-2 w-full mb-4 rounded-xl" />
 
       <!-- Down Payment Field -->
-      <label id="label-downPayment" for="downPayment" class="block font-semibold mb-1">Down Payment ($)</label>
+      <label for="downPayment">Down Payment ($)</label>
       <input id="downPayment" type="number" class="border p-2 w-full mb-4 rounded-xl" />
 
       <!-- Province Field -->
-      <label id="label-province" for="province" class="block font-semibold mb-1">Province</label>
+      <label for="province">Province</label>
       <select id="province" class="border p-2 w-full mb-4 rounded-xl">
         <option value="QC">Quebec</option>
         <option value="ON">Ontario</option>
@@ -47,7 +38,7 @@
       </select>
 
       <!-- Credit Score Field -->
-      <label id="label-creditScore" for="creditScore" class="block font-semibold mb-1">Credit Score</label>
+      <label for="creditScore">Credit Score</label>
       <select id="creditScore" class="border p-2 w-full mb-4 rounded-xl">
         <option value="Excellent">Excellent</option>
         <option value="Very Good">Very Good</option>
@@ -61,19 +52,19 @@
 
       <!-- Results Section -->
       <div class="bg-gray-100 p-3 rounded-xl mb-4 text-center">
-        <p><strong id="label-totalTax">Total Taxes:</strong> $<span id="totalTax">0.00</span></p>
-        <p><strong id="label-totalAmount">Total Amount:</strong> $<span id="totalAmount">0.00</span></p>
+        <p><strong>Total Taxes:</strong> $<span id="totalTax">0.00</span></p>
+        <p><strong>Total Amount:</strong> $<span id="totalAmount">0.00</span></p>
       </div>
 
       <!-- Monthly Payment Comparison -->
-      <h3 id="term-compare-heading" class="text-lg font-semibold mb-2">Monthly Payment Comparison by Term</h3>
+      <h3 class="text-lg font-semibold mb-2">Monthly Payment Comparison by Term</h3>
       <p id="termNote" class="text-red-600 text-sm mb-2"></p>
       <div class="overflow-x-auto mb-6">
         <table class="w-full text-sm text-left">
           <thead class="bg-gray-200">
             <tr>
-              <th id="term-header" class="p-2">Term (months)</th>
-              <th id="payment-header" class="p-2">Monthly Payment ($)</th>
+              <th class="p-2">Term (months)</th>
+              <th class="p-2">Monthly Payment ($)</th>
             </tr>
           </thead>
           <tbody id="termComparisonTable" class="divide-y"></tbody>
@@ -81,115 +72,25 @@
       </div>
 
       <!-- Email Field -->
-      <label id="label-email" for="email" class="block font-semibold mb-1">Client Email</label>
+      <label for="email" class="block font-semibold mb-1">Client Email</label>
       <input id="email" type="email" class="border p-2 w-full mb-4 rounded-xl" />
+
+      <!-- Send Button -->
       <button id="send-btn" class="bg-green-500 text-white p-3 w-full rounded-xl" onclick="sendApplication()">Send Application</button>
     </section>
 
-    <!-- Service Provider Portal Sidebar (on the right) -->
+    <!-- Service Provider Portal Sidebar -->
     <aside class="bg-white p-6 rounded-2xl shadow w-full">
-      <div class="mb-6">
-        <h3 class="text-xl font-bold text-blue-800 mb-4">Service Provider Portal</h3>
-        <p class="text-gray-700 mb-4">Log in to manage your account, view applications, and more.</p>
-        <a href="https://icebergfinance2sp.b2clogin.com/..." target="_blank" class="block bg-blue-700 text-white text-center p-3 rounded-xl font-semibold hover:bg-blue-800 transition">Access iFinance Portal</a>
-      </div>
-
-      <!-- Service Provider Link (Below Access iFinance Portal) -->
-      <label id="label-link" for="sp-link" class="block font-semibold mb-2">Service Provider Link</label>
+      <label for="sp-link" class="block font-semibold mb-2">Service Provider Link</label>
       <input id="sp-link" type="url" class="border p-2 w-full mb-4 rounded-xl" placeholder="Enter your finance link here" />
       <button id="save-link-btn" class="bg-green-500 text-white p-3 w-full rounded-xl" onclick="saveProviderLink()">Save Link</button>
       <p id="saved-link-msg" class="text-green-600 mt-2"></p>
-
-      <!-- Benefits Sections -->
-      <details class="mb-4">
-        <summary id="summary-client" class="text-xl font-bold text-blue-800 cursor-pointer">Why Offer iFinance to Your Clients?</summary>
-        <ul id="benefits-list" class="list-disc list-inside text-gray-700 space-y-2 mt-2">
-          <li>Flexible payment terms up to 84 months</li>
-          <li>In business since 1996</li>
-          <li>Initial pre-qualification has no impact on credit</li>
-          <li>Get pre-approved in 2 minutes</li>
-          <li>High approval rates across all credit tiers</li>
-          <li>No upfront fees or hidden charges</li>
-          <li>Quick and easy online application process</li>
-          <li>Trusted by thousands of Canadian businesses</li>
-          <li>Better rates than most credit cards</li>
-        </ul>
-      </details>
-
-      <details class="mb-4">
-        <summary id="summary-sp" class="text-xl font-bold text-blue-800 cursor-pointer">Why Use iFinance as a Service Provider?</summary>
-        <ul id="benefits-list-sp" class="list-disc list-inside text-gray-700 space-y-2 mt-2">
-          <li>Get paid upfront — no waiting on customers</li>
-          <li>No transaction fees like credit card payments</li>
-          <li>Offer financing to boost customer conversion rates</li>
-          <li>Stand out from competitors with flexible payment options</li>
-          <li>Secure larger deals by reducing price objections</li>
-        </ul>
-      </details>
     </aside>
   </main>
 
   <script>
     // Initialize EmailJS with your Public Key
     emailjs.init('pyDKjabHr4PKjIY65'); // Public Key
-
-    // Language translation function
-    function updateLanguage(lang) {
-      const isFr = lang === 'fr';
-      const translations = {
-        en: {
-          title: 'Loan Calculator',
-          labelAmount: 'Total Purchase Amount ($)',
-          labelDownPayment: 'Down Payment ($)',
-          labelProvince: 'Province',
-          labelCreditScore: 'Credit Score',
-          labelEmail: 'Client Email',
-          calculateButton: 'Calculate',
-          totalTaxLabel: 'Total Taxes:',
-          totalAmountLabel: 'Total Amount:',
-          termCompareHeading: 'Monthly Payment Comparison by Term',
-          termNote: 'Terms over 60 months available only on loans $3,000 and up.',
-          saveLinkButton: 'Save Link',
-          savedLinkMsg: 'Link saved successfully!',
-          clientBenefitsTitle: 'Why Offer iFinance to Your Clients?',
-          spBenefitsTitle: 'Why Use iFinance as a Service Provider?',
-        },
-        fr: {
-          title: 'Calculateur de prêt',
-          labelAmount: 'Montant total de l\'achat ($)',
-          labelDownPayment: 'Acompte ($)',
-          labelProvince: 'Province',
-          labelCreditScore: 'Score de crédit',
-          labelEmail: 'Email du client',
-          calculateButton: 'Calculer',
-          totalTaxLabel: 'Taxes totales :',
-          totalAmountLabel: 'Montant total :',
-          termCompareHeading: 'Comparaison des paiements mensuels par terme',
-          termNote: 'Les termes supérieurs à 60 mois sont disponibles uniquement pour les prêts de 3 000 $ et plus.',
-          saveLinkButton: 'Enregistrer le lien',
-          savedLinkMsg: 'Lien enregistré avec succès!',
-          clientBenefitsTitle: 'Pourquoi proposer iFinance à vos clients ?',
-          spBenefitsTitle: 'Pourquoi utiliser iFinance comme fournisseur de services ?',
-        }
-      };
-
-      const t = translations[lang];
-      document.getElementById('title').textContent = t.title;
-      document.getElementById('label-amount').textContent = t.labelAmount;
-      document.getElementById('label-downPayment').textContent = t.labelDownPayment;
-      document.getElementById('label-province').textContent = t.labelProvince;
-      document.getElementById('label-creditScore').textContent = t.labelCreditScore;
-      document.getElementById('label-email').textContent = t.labelEmail;
-      document.getElementById('calculate-btn').textContent = t.calculateButton;
-      document.getElementById('label-totalTax').textContent = t.totalTaxLabel;
-      document.getElementById('label-totalAmount').textContent = t.totalAmountLabel;
-      document.getElementById('term-compare-heading').textContent = t.termCompareHeading;
-      document.getElementById('termNote').textContent = t.termNote;
-      document.getElementById('save-link-btn').textContent = t.saveLinkButton;
-      document.getElementById('saved-link-msg').textContent = t.savedLinkMsg;
-      document.getElementById('summary-client').textContent = t.clientBenefitsTitle;
-      document.getElementById('summary-sp').textContent = t.spBenefitsTitle;
-    }
 
     // Loan Calculation Function
     function calculateLoan() {
@@ -249,41 +150,37 @@
       document.getElementById('totalAmount').textContent = totalWithTax.toFixed(2);
     }
 
+    // Save Service Provider Link
     function saveProviderLink() {
       const link = document.getElementById('sp-link').value;
       document.getElementById('saved-link-msg').textContent = 'Link saved: ' + link;
     }
 
     // Send Application (send the Service Provider link to the client's email)
-function sendApplication() {
-  const email = document.getElementById('email').value;
-  const serviceProviderLink = document.getElementById('sp-link').value;
+    function sendApplication() {
+      const email = document.getElementById('email').value;
+      const serviceProviderLink = document.getElementById('sp-link').value;
+      if (email && serviceProviderLink) {
+        const templateParams = {
+          to_email: email,  // Client email
+          provider_link: serviceProviderLink,  // Service provider link
+        };
 
-  if (email && serviceProviderLink) {
-    // Set up the parameters for the email
-    const templateParams = {
-      to_email: email,  // Client email from the form
-      provider_link: serviceProviderLink,  // Service provider link from the form
-    };
-
-    // Initialize EmailJS and send the email using the Public Key
-    emailjs.send('service_ifpzdni', 'template_w4vdfgv', templateParams, 'pyDKjabHr4PKjIY65')  // Public Key used here
-      .then(function(response) {
-        alert('Application sent successfully!');
-      }, function(error) {
-        alert('There was an error sending the email. Please try again.');
-      });
-  } else {
-    alert('Please enter a valid email and Service Provider Link.');
-  }
-}
-
-    // Set default language based on browser
-    const userLang = navigator.language.startsWith('fr') ? 'fr' : 'en';
-    updateLanguage(userLang);
+        // Send the email using EmailJS
+        emailjs.send('service_ifpzdni', 'template_w4vdfgv', templateParams, 'pyDKjabHr4PKjIY65')
+          .then(function(response) {
+            alert('Application sent successfully!');
+          }, function(error) {
+            alert('There was an error sending the email. Please try again.');
+          });
+      } else {
+        alert('Please enter a valid email and Service Provider Link.');
+      }
+    }
   </script>
 </body>
 </html>
+
 
 
 
