@@ -4,23 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Loan Calculator</title>
-  <!-- Add EmailJS script here -->
   <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
 </head>
 <body class="flex justify-center items-start min-h-screen p-6 bg-gray-100 mb-10">
-  <main class="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-3 gap-6">
-    <section class="lg:col-span-2 bg-white p-6 rounded-2xl shadow">
-      <!-- Loan Amount Field -->
-      <label for="amount">Total Purchase Amount ($)</label>
+  <main class="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Left Column: Loan Calculation Form -->
+    <section class="bg-white p-6 rounded-2xl shadow">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Loan Calculator</h2>
+
+      <label for="amount" class="block font-semibold mb-1">Total Purchase Amount ($)</label>
       <input id="amount" type="number" class="border p-2 w-full mb-4 rounded-xl" />
 
-      <!-- Down Payment Field -->
-      <label for="downPayment">Down Payment ($)</label>
+      <label for="downPayment" class="block font-semibold mb-1">Down Payment ($)</label>
       <input id="downPayment" type="number" class="border p-2 w-full mb-4 rounded-xl" />
 
-      <!-- Province Field -->
-      <label for="province">Province</label>
+      <label for="province" class="block font-semibold mb-1">Province</label>
       <select id="province" class="border p-2 w-full mb-4 rounded-xl">
         <option value="QC">Quebec</option>
         <option value="ON">Ontario</option>
@@ -37,8 +36,7 @@
         <option value="YT">Yukon</option>
       </select>
 
-      <!-- Credit Score Field -->
-      <label for="creditScore">Credit Score</label>
+      <label for="creditScore" class="block font-semibold mb-1">Credit Score</label>
       <select id="creditScore" class="border p-2 w-full mb-4 rounded-xl">
         <option value="Excellent">Excellent</option>
         <option value="Very Good">Very Good</option>
@@ -47,16 +45,13 @@
         <option value="Poor">Poor</option>
       </select>
 
-      <!-- Calculate Button -->
       <button id="calculate-btn" class="bg-blue-600 text-white p-3 w-full rounded-xl mb-4" onclick="calculateLoan()">Calculate</button>
 
-      <!-- Results Section -->
       <div class="bg-gray-100 p-3 rounded-xl mb-4 text-center">
         <p><strong>Total Taxes:</strong> $<span id="totalTax">0.00</span></p>
         <p><strong>Total Amount:</strong> $<span id="totalAmount">0.00</span></p>
       </div>
 
-      <!-- Monthly Payment Comparison -->
       <h3 class="text-lg font-semibold mb-2">Monthly Payment Comparison by Term</h3>
       <p id="termNote" class="text-red-600 text-sm mb-2"></p>
       <div class="overflow-x-auto mb-6">
@@ -71,20 +66,34 @@
         </table>
       </div>
 
-      <!-- Email Field -->
       <label for="email" class="block font-semibold mb-1">Client Email</label>
       <input id="email" type="email" class="border p-2 w-full mb-4 rounded-xl" />
-
-      <!-- Send Button -->
       <button id="send-btn" class="bg-green-500 text-white p-3 w-full rounded-xl" onclick="sendApplication()">Send Application</button>
     </section>
 
-    <!-- Service Provider Portal Sidebar -->
+    <!-- Right Column: Benefits and Information -->
     <aside class="bg-white p-6 rounded-2xl shadow w-full">
-      <label for="sp-link" class="block font-semibold mb-2">Service Provider Link</label>
-      <input id="sp-link" type="url" class="border p-2 w-full mb-4 rounded-xl" placeholder="Enter your finance link here" />
-      <button id="save-link-btn" class="bg-green-500 text-white p-3 w-full rounded-xl" onclick="saveProviderLink()">Save Link</button>
-      <p id="saved-link-msg" class="text-green-600 mt-2"></p>
+      <h3 class="text-xl font-bold text-blue-800 mb-4">Why Offer iFinance to Your Clients?</h3>
+      <ul class="list-disc list-inside text-gray-700 space-y-2">
+        <li>Flexible payment terms up to 84 months</li>
+        <li>In business since 1996</li>
+        <li>Initial pre-qualification has no impact on credit</li>
+        <li>Get pre-approved in 2 minutes</li>
+        <li>High approval rates across all credit tiers</li>
+        <li>No upfront fees or hidden charges</li>
+        <li>Quick and easy online application process</li>
+        <li>Trusted by thousands of Canadian businesses</li>
+        <li>Better rates than most credit cards</li>
+      </ul>
+
+      <h3 class="text-xl font-bold text-blue-800 mt-8 mb-4">Why Use iFinance as a Service Provider?</h3>
+      <ul class="list-disc list-inside text-gray-700 space-y-2">
+        <li>Get paid upfront — no waiting on customers</li>
+        <li>No transaction fees like credit card payments</li>
+        <li>Offer financing to boost customer conversion rates</li>
+        <li>Stand out from competitors with flexible payment options</li>
+        <li>Secure larger deals by reducing price objections</li>
+      </ul>
     </aside>
   </main>
 
@@ -150,23 +159,17 @@
       document.getElementById('totalAmount').textContent = totalWithTax.toFixed(2);
     }
 
-    // Save Service Provider Link
-    function saveProviderLink() {
-      const link = document.getElementById('sp-link').value;
-      document.getElementById('saved-link-msg').textContent = 'Link saved: ' + link;
-    }
-
     // Send Application (send the Service Provider link to the client's email)
     function sendApplication() {
       const email = document.getElementById('email').value;
       const serviceProviderLink = document.getElementById('sp-link').value;
+
       if (email && serviceProviderLink) {
         const templateParams = {
           to_email: email,  // Client email
           provider_link: serviceProviderLink,  // Service provider link
         };
 
-        // Send the email using EmailJS
         emailjs.send('service_ifpzdni', 'template_w4vdfgv', templateParams, 'pyDKjabHr4PKjIY65')
           .then(function(response) {
             alert('Application sent successfully!');
@@ -180,9 +183,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
