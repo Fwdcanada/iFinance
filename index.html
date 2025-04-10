@@ -255,20 +255,28 @@
     }
 
     // Send Application (send the Service Provider link to the client's email)
-    function sendApplication() {
-      const email = document.getElementById('email').value;
-      const serviceProviderLink = document.getElementById('sp-link').value;
-      if (email && serviceProviderLink) {
-        emailjs.send('service_ifpzdni', 'template_w4vdfgv', { to_email: email, provider_link: serviceProviderLink }, 'pyDKjabHr4PKjIY65')
-          .then(function(response) {
-            alert('Application sent successfully!');
-          }, function(error) {
-            alert('There was an error sending the email. Please try again.');
-          });
-      } else {
-        alert('Please enter a valid email and Service Provider Link.');
-      }
-    }
+function sendApplication() {
+  const email = document.getElementById('email').value;
+  const serviceProviderLink = document.getElementById('sp-link').value;
+
+  if (email && serviceProviderLink) {
+    // Set up the parameters for the email
+    const templateParams = {
+      to_email: email,  // Client email from the form
+      provider_link: serviceProviderLink,  // Service provider link from the form
+    };
+
+    // Initialize EmailJS and send the email using the Public Key
+    emailjs.send('service_ifpzdni', 'template_w4vdfgv', templateParams, 'pyDKjabHr4PKjIY65')  // Public Key used here
+      .then(function(response) {
+        alert('Application sent successfully!');
+      }, function(error) {
+        alert('There was an error sending the email. Please try again.');
+      });
+  } else {
+    alert('Please enter a valid email and Service Provider Link.');
+  }
+}
 
     // Set default language based on browser
     const userLang = navigator.language.startsWith('fr') ? 'fr' : 'en';
