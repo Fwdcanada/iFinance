@@ -8,8 +8,8 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
 </head>
 <body class="flex justify-center items-start min-h-screen p-6 bg-gray-100 mb-10">
-  <main class="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-6">
-    <!-- Left Column: Why Offer iFinance and Why Use as Service Provider -->
+  <main class="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Left Column: Why Offer iFinance to Your Clients? and Why Use iFinance as a Service Provider? -->
     <section class="bg-white p-6 rounded-2xl shadow">
       <h3 class="text-xl font-bold text-blue-800 mb-4">Why Offer iFinance to Your Clients?</h3>
       <ul class="list-disc list-inside text-gray-700 space-y-2">
@@ -34,7 +34,7 @@
       </ul>
     </section>
 
-    <!-- Right Column: Loan Calculator -->
+    <!-- Middle Column: Loan Calculator -->
     <section class="bg-white p-6 rounded-2xl shadow">
       <h2 class="text-xl font-bold text-gray-800 mb-4">Loan Calculator</h2>
 
@@ -94,6 +94,18 @@
       <label for="email" class="block font-semibold mb-1">Client Email</label>
       <input id="email" type="email" class="border p-2 w-full mb-4 rounded-xl" />
       <button id="send-btn" class="bg-green-500 text-white p-3 w-full rounded-xl" onclick="sendApplication()">Send Application</button>
+    </section>
+
+    <!-- Right Column: Service Provider Portal -->
+    <section class="bg-white p-6 rounded-2xl shadow">
+      <h3 class="text-xl font-bold text-blue-800 mb-4">Service Provider Portal</h3>
+      <p class="text-gray-700 mb-4">Log in to manage your account, view applications, and more.</p>
+      <a href="https://icebergfinance2sp.b2clogin.com/..." target="_blank" class="block bg-blue-700 text-white text-center p-3 rounded-xl font-semibold hover:bg-blue-800 transition">Access iFinance Portal</a>
+
+      <!-- Enter SP Apply Code -->
+      <label for="spApplyCode" class="block font-semibold mt-4 mb-2">Enter SP Apply Code</label>
+      <input id="spApplyCode" type="text" class="border p-2 w-full mb-4 rounded-xl" placeholder="Enter your Apply Code" />
+      <button class="bg-blue-600 text-white p-3 w-full rounded-xl" onclick="submitSPCode()">Submit Apply Code</button>
     </section>
   </main>
 
@@ -159,7 +171,17 @@
       document.getElementById('totalAmount').textContent = totalWithTax.toFixed(2);
     }
 
-    // Send Application (send the Service Provider link to the client's email)
+    // Service Provider Apply Code Submission
+    function submitSPCode() {
+      const applyCode = document.getElementById('spApplyCode').value;
+      if (applyCode) {
+        alert('Service Provider Apply Code submitted: ' + applyCode);
+      } else {
+        alert('Please enter a valid Apply Code.');
+      }
+    }
+
+    // Send Application Function (via EmailJS)
     function sendApplication() {
       const email = document.getElementById('email').value;
       const serviceProviderLink = document.getElementById('sp-link').value;
@@ -183,3 +205,4 @@
   </script>
 </body>
 </html>
+
