@@ -11,8 +11,14 @@
   <main class="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-3 gap-6">
     <!-- Left Column: Why Offer iFinance to Clients & Why Use iFinance as Service Provider -->
     <section class="bg-white p-6 rounded-2xl shadow">
-      <h3 class="text-xl font-bold text-blue-800 mb-4">Why Offer iFinance to Your Clients?</h3>
-      <ul class="list-disc list-inside text-gray-700 space-y-2">
+      <h3 class="text-xl font-bold text-blue-800 mb-4 flex justify-between">
+        Why Offer iFinance to Your Clients?
+        <select class="border p-2 rounded" onchange="toggleBenefits('clients', this.value)">
+          <option value="en">EN</option>
+          <option value="fr">FR</option>
+        </select>
+      </h3>
+      <ul id="clients-benefits" class="list-disc list-inside text-gray-700 space-y-2">
         <li>Flexible payment terms up to 84 months</li>
         <li>In business since 1996</li>
         <li>Initial pre-qualification has no impact on credit</li>
@@ -24,8 +30,14 @@
         <li>Better rates than most credit cards</li>
       </ul>
 
-      <h3 class="text-xl font-bold text-blue-800 mt-8 mb-4">Why Use iFinance as a Service Provider?</h3>
-      <ul class="list-disc list-inside text-gray-700 space-y-2">
+      <h3 class="text-xl font-bold text-blue-800 mt-8 mb-4 flex justify-between">
+        Why Use iFinance as a Service Provider?
+        <select class="border p-2 rounded" onchange="toggleBenefits('service', this.value)">
+          <option value="en">EN</option>
+          <option value="fr">FR</option>
+        </select>
+      </h3>
+      <ul id="service-benefits" class="list-disc list-inside text-gray-700 space-y-2">
         <li>Get paid upfront — no waiting on customers</li>
         <li>No transaction fees like credit card payments</li>
         <li>Offer financing to boost customer conversion rates</li>
@@ -34,8 +46,8 @@
       </ul>
     </section>
 
-    <!-- Middle Column: Loan Calculator -->
-    <section class="bg-white p-6 rounded-2xl shadow">
+    <!-- Middle Column: Loan Calculator (Wider) -->
+    <section class="bg-white p-6 rounded-2xl shadow w-full lg:col-span-2">
       <h2 class="text-xl font-bold text-gray-800 mb-4">Loan Calculator</h2>
 
       <label for="amount" class="block font-semibold mb-1">Total Purchase Amount ($)</label>
