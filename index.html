@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Loan Calculator</title>
+  <!-- Add EmailJS script here -->
+  <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
 </head>
 <body class="flex justify-center items-start min-h-screen p-6 bg-gray-100 mb-10">
@@ -128,6 +130,9 @@
   </main>
 
   <script>
+    // Initialize EmailJS with your Public Key
+    emailjs.init('pyDKjabHr4PKjIY65'); // Public Key
+
     // Language translation function
     function updateLanguage(lang) {
       const isFr = lang === 'fr';
@@ -254,7 +259,12 @@
       const email = document.getElementById('email').value;
       const serviceProviderLink = document.getElementById('sp-link').value;
       if (email && serviceProviderLink) {
-        alert('Application sent to: ' + email + '\nService Provider Link: ' + serviceProviderLink);
+        emailjs.send('service_ifpzdni', 'template_w4vdfgv', { to_email: email, provider_link: serviceProviderLink }, 'pyDKjabHr4PKjIY65')
+          .then(function(response) {
+            alert('Application sent successfully!');
+          }, function(error) {
+            alert('There was an error sending the email. Please try again.');
+          });
       } else {
         alert('Please enter a valid email and Service Provider Link.');
       }
@@ -266,6 +276,7 @@
   </script>
 </body>
 </html>
+
 
 
 
