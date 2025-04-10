@@ -102,14 +102,26 @@
       <details class="mb-4">
         <summary id="summary-client" class="text-xl font-bold text-blue-800 cursor-pointer">Why Offer iFinance to Your Clients?</summary>
         <ul id="benefits-list" class="list-disc list-inside text-gray-700 space-y-2 mt-2">
-          <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+          <li>Flexible payment terms up to 84 months</li>
+          <li>In business since 1996</li>
+          <li>Initial pre-qualification has no impact on credit</li>
+          <li>Get pre-approved in 2 minutes</li>
+          <li>High approval rates across all credit tiers</li>
+          <li>No upfront fees or hidden charges</li>
+          <li>Quick and easy online application process</li>
+          <li>Trusted by thousands of Canadian businesses</li>
+          <li>Better rates than most credit cards</li>
         </ul>
       </details>
 
       <details class="mb-4">
         <summary id="summary-sp" class="text-xl font-bold text-blue-800 cursor-pointer">Why Use iFinance as a Service Provider?</summary>
         <ul id="benefits-list-sp" class="list-disc list-inside text-gray-700 space-y-2 mt-2">
-          <li></li><li></li><li></li><li></li><li></li>
+          <li>Get paid upfront — no waiting on customers</li>
+          <li>No transaction fees like credit card payments</li>
+          <li>Offer financing to boost customer conversion rates</li>
+          <li>Stand out from competitors with flexible payment options</li>
+          <li>Secure larger deals by reducing price objections</li>
         </ul>
       </details>
     </aside>
@@ -136,24 +148,6 @@
           savedLinkMsg: 'Link saved successfully!',
           clientBenefitsTitle: 'Why Offer iFinance to Your Clients?',
           spBenefitsTitle: 'Why Use iFinance as a Service Provider?',
-          benefitsClient: [
-            'Flexible payment terms up to 84 months',
-            'In business since 1996',
-            'Initial pre-qualification has no impact on credit',
-            'Get pre-approved in 2 minutes',
-            'High approval rates across all credit tiers',
-            'No upfront fees or hidden charges',
-            'Quick and easy online application process',
-            'Trusted by thousands of Canadian businesses',
-            'Better rates than most credit cards'
-          ],
-          benefitsSP: [
-            'Get paid upfront — no waiting on customers',
-            'No transaction fees like credit card payments',
-            'Offer financing to boost customer conversion rates',
-            'Stand out from competitors with flexible payment options',
-            'Secure larger deals by reducing price objections'
-          ]
         },
         fr: {
           title: 'Calculateur de prêt',
@@ -171,24 +165,6 @@
           savedLinkMsg: 'Lien enregistré avec succès!',
           clientBenefitsTitle: 'Pourquoi proposer iFinance à vos clients ?',
           spBenefitsTitle: 'Pourquoi utiliser iFinance comme fournisseur de services ?',
-          benefitsClient: [
-            'Modalités de paiement flexibles jusqu\'à 84 mois',
-            'En affaires depuis 1996',
-            'Préqualification initiale sans impact sur le crédit',
-            'Préapprobation en 2 minutes',
-            'Taux d\'approbation élevés pour tous les niveaux de crédit',
-            'Aucuns frais initiaux ou frais cachés',
-            'Processus de demande simple et rapide',
-            'Fiabilité reconnue par des milliers d\'entreprises canadiennes',
-            'Meilleurs taux que la plupart des cartes de crédit'
-          ],
-          benefitsSP: [
-            'Recevez un paiement immédiat — plus besoin d\'attendre les clients',
-            'Aucun frais de transaction comme les cartes de crédit',
-            'Proposez du financement pour augmenter votre taux de conversion',
-            'Démarquez-vous grâce à des options de paiement flexibles',
-            'Concluez des ventes plus importantes en réduisant les objections liées au prix'
-          ]
         }
       };
 
@@ -208,17 +184,6 @@
       document.getElementById('saved-link-msg').textContent = t.savedLinkMsg;
       document.getElementById('summary-client').textContent = t.clientBenefitsTitle;
       document.getElementById('summary-sp').textContent = t.spBenefitsTitle;
-
-      // Update benefits list dynamically
-      const clientList = document.querySelectorAll('#benefits-list li');
-      t.benefitsClient.forEach((text, i) => {
-        if (clientList[i]) clientList[i].textContent = text;
-      });
-
-      const spList = document.querySelectorAll('#benefits-list-sp li');
-      t.benefitsSP.forEach((text, i) => {
-        if (spList[i]) spList[i].textContent = text;
-      });
     }
 
     // Loan Calculation Function
@@ -256,9 +221,8 @@
       };
 
       const adjustment = rateAdjustments[document.getElementById('creditScore').value] || 0.1499;
-      const monthlyInterestRate = adjustment / 12; // Monthly interest rate
+      const monthlyInterestRate = adjustment / 12;
 
-      // Correct amortization calculation logic
       const terms = [12, 24, 36, 48, 60, 72, 84];
       const table = document.getElementById('termComparisonTable');
       const note = document.getElementById('termNote');
@@ -302,6 +266,7 @@
   </script>
 </body>
 </html>
+
 
 
 
