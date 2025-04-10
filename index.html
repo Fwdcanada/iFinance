@@ -12,37 +12,39 @@
     <!-- Left Column: Why Offer iFinance to Clients & Why Use iFinance as Service Provider -->
     <section class="bg-white p-6 rounded-2xl shadow">
       <h3 class="text-xl font-bold text-blue-800 mb-4 flex justify-between">
-        Why Offer iFinance to Your Clients?
-        <select class="border p-2 rounded" onchange="toggleBenefits('clients', this.value)">
+        <span id="title-offer">Why Offer iFinance to Your Clients?</span>
+        <select class="border p-2 rounded" onchange="updateLanguage(this.value)">
           <option value="en">EN</option>
           <option value="fr">FR</option>
         </select>
       </h3>
-      <ul id="clients-benefits" class="list-disc list-inside text-gray-700 space-y-2">
-        <li>Flexible payment terms up to 84 months</li>
-        <li>In business since 1996</li>
-        <li>Initial pre-qualification has no impact on credit</li>
-        <li>Get pre-approved in 2 minutes</li>
-        <li>High approval rates across all credit tiers</li>
-        <li>No upfront fees or hidden charges</li>
-        <li>Quick and easy online application process</li>
-        <li>Trusted by thousands of Canadian businesses</li>
-        <li>Better rates than most credit cards</li>
+      <button class="text-blue-600" onclick="toggleBenefits('clients')">▼ Show/Hide Benefits</button>
+      <ul id="clients-benefits" class="list-disc list-inside text-gray-700 space-y-2 mt-2 hidden">
+        <li id="benefit1">Flexible payment terms up to 84 months</li>
+        <li id="benefit2">In business since 1996</li>
+        <li id="benefit3">Initial pre-qualification has no impact on credit</li>
+        <li id="benefit4">Get pre-approved in 2 minutes</li>
+        <li id="benefit5">High approval rates across all credit tiers</li>
+        <li id="benefit6">No upfront fees or hidden charges</li>
+        <li id="benefit7">Quick and easy online application process</li>
+        <li id="benefit8">Trusted by thousands of Canadian businesses</li>
+        <li id="benefit9">Better rates than most credit cards</li>
       </ul>
 
       <h3 class="text-xl font-bold text-blue-800 mt-8 mb-4 flex justify-between">
-        Why Use iFinance as a Service Provider?
-        <select class="border p-2 rounded" onchange="toggleBenefits('service', this.value)">
+        <span id="title-use">Why Use iFinance as a Service Provider?</span>
+        <select class="border p-2 rounded" onchange="updateLanguage(this.value)">
           <option value="en">EN</option>
           <option value="fr">FR</option>
         </select>
       </h3>
-      <ul id="service-benefits" class="list-disc list-inside text-gray-700 space-y-2">
-        <li>Get paid upfront — no waiting on customers</li>
-        <li>No transaction fees like credit card payments</li>
-        <li>Offer financing to boost customer conversion rates</li>
-        <li>Stand out from competitors with flexible payment options</li>
-        <li>Secure larger deals by reducing price objections</li>
+      <button class="text-blue-600" onclick="toggleBenefits('service')">▼ Show/Hide Benefits</button>
+      <ul id="service-benefits" class="list-disc list-inside text-gray-700 space-y-2 mt-2 hidden">
+        <li id="service1">Get paid upfront — no waiting on customers</li>
+        <li id="service2">No transaction fees like credit card payments</li>
+        <li id="service3">Offer financing to boost customer conversion rates</li>
+        <li id="service4">Stand out from competitors with flexible payment options</li>
+        <li id="service5">Secure larger deals by reducing price objections</li>
       </ul>
     </section>
 
@@ -125,97 +127,87 @@
     // Initialize EmailJS with your Public Key
     emailjs.init('pyDKjabHr4PKjIY65'); // Public Key
 
-    // Loan Calculation Function
-    function calculateLoan() {
-      const amount = parseFloat(document.getElementById('amount').value) || 0;
-      const down = parseFloat(document.getElementById('downPayment').value) || 0;
-      const province = document.getElementById('province').value;
-      const total = amount - down;
-
-      const taxRates = {
-        QC: 0.14975,
-        ON: 0.13,
-        BC: 0.12,
-        AB: 0.05,
-        MB: 0.12,
-        SK: 0.11,
-        NS: 0.15,
-        NB: 0.15,
-        NL: 0.15,
-        PE: 0.15,
-        NT: 0.05,
-        NU: 0.05,
-        YT: 0.05
+    // Language update function
+    function updateLanguage(lang) {
+      const translations = {
+        en: {
+          titleOffer: "Why Offer iFinance to Your Clients?",
+          titleUse: "Why Use iFinance as a Service Provider?",
+          benefit1: "Flexible payment terms up to 84 months",
+          benefit2: "In business since 1996",
+          benefit3: "Initial pre-qualification has no impact on credit",
+          benefit4: "Get pre-approved in 2 minutes",
+          benefit5: "High approval rates across all credit tiers",
+          benefit6: "No upfront fees or hidden charges",
+          benefit7: "Quick and easy online application process",
+          benefit8: "Trusted by thousands of Canadian businesses",
+          benefit9: "Better rates than most credit cards",
+          service1: "Get paid upfront — no waiting on customers",
+          service2: "No transaction fees like credit card payments",
+          service3: "Offer financing to boost customer conversion rates",
+          service4: "Stand out from competitors with flexible payment options",
+          service5: "Secure larger deals by reducing price objections"
+        },
+        fr: {
+          titleOffer: "Pourquoi proposer iFinance à vos clients ?",
+          titleUse: "Pourquoi utiliser iFinance comme fournisseur de services ?",
+          benefit1: "Modalités de paiement flexibles jusqu’à 84 mois",
+          benefit2: "En affaires depuis 1996",
+          benefit3: "Préqualification initiale sans impact sur le crédit",
+          benefit4: "Préapprobation en 2 minutes",
+          benefit5: "Taux d’approbation élevés pour tous les niveaux de crédit",
+          benefit6: "Aucuns frais initiaux ou frais cachés",
+          benefit7: "Processus de demande simple et rapide",
+          benefit8: "Fiabilité reconnue par des milliers d’entreprises canadiennes",
+          benefit9: "Meilleurs taux que la plupart des cartes de crédit",
+          service1: "Recevez un paiement immédiat — plus besoin d’attendre les clients",
+          service2: "Aucun frais de transaction comme les cartes de crédit",
+          service3: "Proposez du financement pour augmenter votre taux de conversion",
+          service4: "Démarquez-vous grâce à des options de paiement flexibles",
+          service5: "Concluez des ventes plus importantes en réduisant les objections liées au prix"
+        }
       };
 
-      const tax = total * (taxRates[province] || 0.13);
-      const totalWithTax = total + tax;
+      const t = translations[lang];
+      
+      // Update the titles and benefits
+      document.getElementById('title-offer').textContent = t.titleOffer;
+      document.getElementById('title-use').textContent = t.titleUse;
 
-      const rateAdjustments = {
-        Excellent: 0.0999,
-        "Very Good": 0.1299,
-        Good: 0.1499,
-        Fair: 0.1699,
-        Poor: 0.1999
-      };
+      // Update client benefits
+      document.getElementById('benefit1').textContent = t.benefit1;
+      document.getElementById('benefit2').textContent = t.benefit2;
+      document.getElementById('benefit3').textContent = t.benefit3;
+      document.getElementById('benefit4').textContent = t.benefit4;
+      document.getElementById('benefit5').textContent = t.benefit5;
+      document.getElementById('benefit6').textContent = t.benefit6;
+      document.getElementById('benefit7').textContent = t.benefit7;
+      document.getElementById('benefit8').textContent = t.benefit8;
+      document.getElementById('benefit9').textContent = t.benefit9;
 
-      const adjustment = rateAdjustments[document.getElementById('creditScore').value] || 0.1499;
-      const monthlyInterestRate = adjustment / 12;
-
-      const terms = [12, 24, 36, 48, 60, 72, 84];
-      const table = document.getElementById('termComparisonTable');
-      const note = document.getElementById('termNote');
-      table.innerHTML = '';
-      note.textContent = '';
-
-      terms.forEach(term => {
-        if (total < 3000 && term > 60) return;
-        if (total >= 3000 && total < 10000 && term > 72) return;
-        if (total < 3000 && term > 60) note.textContent = 'Terms over 60 months available only on loans $3,000 and up.';
-        if (total >= 3000 && total < 10000 && term > 72) note.textContent = 'Terms up to 84 months available only on loans $10,000 and up.';
-
-        const monthlyPayment = (totalWithTax * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, term)) / (Math.pow(1 + monthlyInterestRate, term) - 1);
-        const row = `<tr><td class='p-2'>${term}</td><td class='p-2'>$${monthlyPayment.toFixed(2)}</td></tr>`;
-        table.innerHTML += row;
-      });
-
-      document.getElementById('totalTax').textContent = tax.toFixed(2);
-      document.getElementById('totalAmount').textContent = totalWithTax.toFixed(2);
+      // Update service benefits
+      document.getElementById('service1').textContent = t.service1;
+      document.getElementById('service2').textContent = t.service2;
+      document.getElementById('service3').textContent = t.service3;
+      document.getElementById('service4').textContent = t.service4;
+      document.getElementById('service5').textContent = t.service5;
     }
 
-    // Service Provider Apply Code Submission
-    function submitSPCode() {
-      const applyCode = document.getElementById('spApplyCode').value;
-      if (applyCode) {
-        alert('Service Provider Apply Code submitted: ' + applyCode);
+    // Toggle benefits section visibility
+    function toggleBenefits(section) {
+      const list = document.getElementById(section + '-benefits');
+      if (list.classList.contains('hidden')) {
+        list.classList.remove('hidden');
       } else {
-        alert('Please enter a valid Apply Code.');
+        list.classList.add('hidden');
       }
     }
 
-    // Send Application Function (via EmailJS)
-    function sendApplication() {
-      const email = document.getElementById('email').value;
-      const serviceProviderLink = document.getElementById('sp-link').value;
-
-      if (email && serviceProviderLink) {
-        const templateParams = {
-          to_email: email,  // Client email
-          provider_link: serviceProviderLink,  // Service provider link
-        };
-
-        emailjs.send('service_ifpzdni', 'template_w4vdfgv', templateParams, 'pyDKjabHr4PKjIY65')
-          .then(function(response) {
-            alert('Application sent successfully!');
-          }, function(error) {
-            alert('There was an error sending the email. Please try again.');
-          });
-      } else {
-        alert('Please enter a valid email and Service Provider Link.');
-      }
-    }
+    // Initial language setup
+    updateLanguage('en');
   </script>
 </body>
 </html>
+
 
 
